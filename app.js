@@ -27,12 +27,15 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , mysql = require('mysql')
-  , Agility = (new (require('./agility')).Agility);
+;
 
+
+// Base Model class
+var Model = require('./models')(mysql);
 
 // Models
 var models = {
-    Model_User: require('./models/User')()
+    Model_User: require('./models/User')(Model)
 };
 
 // Controllers (and pass models so it can access them for better MVC)

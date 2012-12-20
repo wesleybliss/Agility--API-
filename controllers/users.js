@@ -23,7 +23,10 @@ module.exports = Users = function( Model_User ) {
     /**
      * Private class members
      */
-    // ...
+    
+    // Page title
+    // TODO Why the fuck does this have to be up here & not in the return object? Scope is being a bitch.
+    var title = 'Users';
     
     
     /**
@@ -31,35 +34,21 @@ module.exports = Users = function( Model_User ) {
      */
     return {
         
-        // Page title
-        title: 'Users',
-        
         /**
          * GET users listing.
          */
         index: function( req, res ) {
             
-            var users
-            
-            res.render( 'users/index', {
-                title: this.title + ' | Listing All',
-                users: users
+            Model_User.fetchAll( function(result) {
+                
+                // TODO Handle error
+                console.log( Users.title );
+                res.render( 'users/index', {
+                    title: title + ' | Listing All',
+                    users: result.data
+                });
+                
             });
-            
-            //link.connect();
-            //
-            //var query = 'SELECT id, email, created_at, modified_at AS "count" FROM `users`';
-            //
-            //link.query( query, function(err, result) {
-            //    if ( err ) {
-            //        res.end( 'Error: ' + err );
-            //    }
-            //    else {
-            //        res.send( result );
-            //    }
-            //});
-            //
-            //link.end();
             
         }, // Users.list()
         

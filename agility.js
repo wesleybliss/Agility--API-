@@ -8,7 +8,7 @@
  * @author Wesley Bliss <http://linkedin.com/in/wesleybliss
  */
 
-Agility = function() {};
+var Agility = function(){};
 
 Agility.prototype.mysql = require('mysql');
 Agility.prototype.link = Agility.prototype.mysql.createConnection({
@@ -23,3 +23,9 @@ Agility.prototype.test = function() { return 'heyo' };
 //
 
 module.exports.Agility = Agility;
+
+//module.exports = function() {
+//    return {
+//        foo: 'bar'
+//    }
+//};
