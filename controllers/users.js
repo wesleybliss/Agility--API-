@@ -15,8 +15,9 @@ var link = mysql.createConnection({
  * Users Controller
  *
  * In the style of Singleton, with a JS closure twist.
+ * Models are passed to the closure (at the bottom) for better MVC access.
  */
-module.exports = Users = (function() {
+module.exports = Users = function( Model_User ) {
     
     
     /**
@@ -30,25 +31,35 @@ module.exports = Users = (function() {
      */
     return {
         
+        // Page title
+        title: 'Users',
+        
         /**
          * GET users listing.
          */
-        list: function( req, res ) {
+        index: function( req, res ) {
             
-            link.connect();
+            var users
             
-            var query = 'SELECT id, email, created_at, modified_at AS "count" FROM `users`';
-            
-            link.query( query, function(err, result) {
-                if ( err ) {
-                    res.end( 'Error: ' + err );
-                }
-                else {
-                    res.send( result );
-                }
+            res.render( 'users/index', {
+                title: this.title + ' | Listing All',
+                users: users
             });
             
-            link.end();
+            //link.connect();
+            //
+            //var query = 'SELECT id, email, created_at, modified_at AS "count" FROM `users`';
+            //
+            //link.query( query, function(err, result) {
+            //    if ( err ) {
+            //        res.end( 'Error: ' + err );
+            //    }
+            //    else {
+            //        res.send( result );
+            //    }
+            //});
+            //
+            //link.end();
             
         }, // Users.list()
         
@@ -92,4 +103,4 @@ module.exports = Users = (function() {
         
     } // public scope
     
-})(); // End class & closure
+}; // End class & closure
