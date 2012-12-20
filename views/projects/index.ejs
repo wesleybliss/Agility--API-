@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' type="text/css">
+</head>
+<body>
+    
+    <h1><%= title %></h1>
+    <p>Found <%= projects.length %> projects.</p>
+    
+    <table align="left" cellpadding="2" cellspacing="2">
+        <tr>
+            <th>Name</th>
+            <th>Private</th>
+        </tr>
+        <% projects.forEach( function(project) { %>
+        <tr>
+            <td><%= project.name %></td>
+            <td><%= project.private ? 'Yes' : 'No' %></td>
+        </tr>
+        <% }) %>
+    </table>
+    
+</body>
+</html>

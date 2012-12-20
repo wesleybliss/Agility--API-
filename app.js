@@ -38,11 +38,13 @@ var Model = require('./models')(mysql);
 
 // Models
 var models = {
-    Model_User: require('./models/User')(Model)
+    Model_User: require('./models/User')(Model),
+    Model_Project: require('./models/Project')(Model)
 };
 
 // Controllers (and pass models so it can access them for better MVC)
 var Users = require('./controllers/users')(models.Model_User);
+var Projects = require('./controllers/projects')(models.Model_Project);
 
 
 var app = express();
@@ -78,8 +80,8 @@ app.get('/', routes.index);
 app.get('/api', routes.index);
 app.get('/api/users', Users.index);
 app.get('/api/users/:id', Users.findByID);
-app.get('/api/projects', Users.index);
-app.get('/api/projects/:id', Users.findByID);
+app.get('/api/projects', Projects.index);
+app.get('/api/projects/:id', Projects.findByID);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log("Agility via Express server listening on port " + app.get('port'));

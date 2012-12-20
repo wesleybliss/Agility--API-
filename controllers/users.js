@@ -1,16 +1,3 @@
-
-// MySQL link identifier
-// TODO Wonder if there's a better place to put this
-//      didn't work in agility.js lib
-var mysql = require('mysql');
-var link = mysql.createConnection({
-    host: 'localhost',
-    user: 'agility',
-    password: 'agility',
-    database: 'agility'
-});
-
-
 /**
  * Users Controller
  *

@@ -1,25 +1,67 @@
-
-/*
- * GET projects listing.
+/**
+ * Projects Controller
+ *
+ * In the style of Singleton, with a JS closure twist.
+ * Models are passed to the closure (at the bottom) for better MVC access.
  */
-exports.list = function(req, res) {
+module.exports = Projects = function( Model_Project ) {
     
-    var link = require('mysql').createConnection({
-        host: 'localhost',
-        user: 'agility',
-        password: 'agility'
-    });
     
-    link.connect();
-    link.query( 'USE agility' );
+    /**
+     * Private class members
+     */
     
-    link.query( 'SELECT COUNT(id) AS "count" FROM `projects`', function(err, rows, fields) {
-        if ( err ) {
-            res.end( 'mysql error' + err );
-        }
-        res.send( 'Found ' + rows[0]['count'] + ' projects.' );
-    });
+    // Page title
+    // TODO Why the fuck does this have to be up here & not in the return object? Scope is being a bitch.
+    var title = 'Users';
     
-    link.end();
     
-};
+    /**
+     * Public class members
+     */
+    return {
+        
+        /**
+         * GET projects listing.
+         */
+        index: function( req, res ) {
+            
+            Model_Project.fetchAll( function(result) {
+                
+                // TODO Handle error
+                res.render( 'projects/index', {
+                    title: title + ' | Listing All',
+                    projects: result.data
+                });
+                
+            });
+            
+        }, // Projects.list()
+        
+        
+        /**
+         * Get a specific project by ID
+         *
+         * @param       int     id      A numeric ID > 1
+         */
+        findByID: function(req, res) {
+            
+            if ( parseInt(req.params.id) < 1 ) {
+                res.end( 'Invalid ID: must be numeric, minimum 1.' );
+            }
+            else {
+                Model_Project.findByID( req.params.id, function(result) {
+                    console.log(result);
+                    res.render( 'projects/show', {
+                        title: title + ' | ' + result.data.name,
+                        project: result.data
+                    });
+                });
+            }
+            
+        } // Projects.findByID()
+        
+        
+    } // public scope
+    
+}; // End class & closure
