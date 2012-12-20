@@ -12,6 +12,9 @@ function print_r(x, max, sep, l) { l = l || 0; max = max || 10; sep = sep || ' '
 
 /**
  * Enforce graceful shutdown
+ *
+ * TODO This only catches some terminal exits - need to to SIGTERM/HUP/etc. too
+ * 
  */
 process.on( 'SIGINT', function() {
     console.log( "\nAbuse detected!\nGracefully shutting down from  SIGINT (Crtl-C)." );

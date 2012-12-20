@@ -42,7 +42,6 @@ module.exports = Users = function( Model_User ) {
             Model_User.fetchAll( function(result) {
                 
                 // TODO Handle error
-                console.log( Users.title );
                 res.render( 'users/index', {
                     title: title + ' | Listing All',
                     users: result.data
@@ -60,32 +59,18 @@ module.exports = Users = function( Model_User ) {
          */
         findByID: function(req, res) {
             
-            var id = req.params.id;
-            
-            if ( parseInt(id) < 1 ) {
-                
-                return res.end( 'Invalid ID: must be numeric, minimum 1.' );
-                
+            if ( parseInt(req.params.id) < 1 ) {
+                res.end( 'Invalid ID: must be numeric, minimum 1.' );
             }
             else {
-                
-                link.connect();
-                
-                var query = 'SELECT id, email, created_at, modified_at \
-                    FROM `users` WHERE id = ' + mysql.escape(id) + ' LIMIT 1';
-                
-                link.query( query, function(err, result) {
-                    if ( err ) {
-                        res.end( 'Error: ' + err );
-                    }
-                    else {
-                        res.send( result )
-                    }
+                Model_User.findByID( req.params.id, function(result) {
+                    console.log(result);
+                    res.render( 'users/show', {
+                        title: title + ' | ' + result.data.email,
+                        user: result.data
+                    });
                 });
-                
             }
-            
-            link.end();
             
         } // Users.findByID()
         

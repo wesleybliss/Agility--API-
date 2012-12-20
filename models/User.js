@@ -27,16 +27,39 @@ module.exports = Model_User = function( Model ) {
          */
         fetchAll: function( callback ) {
             
-            Model.db.connect();
+            var link = Model.db.connect();
             
             var query = 'SELECT id, email, created_at, modified_at FROM `users`';
             var data = [];
             
-            Model.db.query( query, function(err, result) {
+            link.query( query, function(err, result) {
                 callback( Model.result(result, err) );
             });
             
-        }
+            link.end();
+            
+        },
+        
+        
+        /**
+         * Get a specific user by ID
+         *
+         * @param       int     id      A numeric ID > 1
+         */
+        findByID: function( id, callback ) {
+            
+            var link = Model.db.connect();
+            
+            var query = 'SELECT id, email, created_at, modified_at \
+                FROM `users` WHERE id = ' + link.escape(id) + ' LIMIT 1';
+            
+            link.query( query, function(err, result) {
+                callback( Model.result(result[0], err) );
+            });
+            
+            link.end();
+            
+        } // Model_User.findByID()
         
     }
     

@@ -7,12 +7,16 @@ module.exports = Model = function( mysql ) {
         /**
          * Create a new MySQL connection instance
          */
-        db: mysql.createConnection({
-            host: 'localhost',
-            user: 'agility',
-            password: 'agility',
-            database: 'agility'
-        }),
+        db: {
+            connect: function() {
+                return mysql.createConnection({
+                    host: 'localhost',
+                    user: 'agility',
+                    password: 'agility',
+                    database: 'agility'
+                })
+            }
+        },
         
         
         /**
