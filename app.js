@@ -77,11 +77,10 @@ app.configure('production', function(){
 });
 
 app.get('/', routes.index);
-app.get('/api', routes.index);
-app.get('/api/users', Users.index);
-app.get('/api/users/:id', Users.findByID);
-app.get('/api/projects', Projects.index);
-app.get('/api/projects/:id', Projects.findByID);
+app.get('/users', Users.index);
+app.get('/users/:id', Users.findByID);
+app.get('/projects', Projects.index);
+app.get('/projects/:id', Projects.findByID);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log("Agility via Express server listening on port " + app.get('port'));

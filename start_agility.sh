@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nodemon -L app.js agility.local 3000
+nodemon -L app.js api.agility.local 3000
