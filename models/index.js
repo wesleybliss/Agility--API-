@@ -24,8 +24,8 @@ module.exports = Model = function( mysql ) {
          */
         result: function( data, error ) {
             return {
-                data: data,
-                error: error
+                error: error,
+                data: data
             }
         }
         

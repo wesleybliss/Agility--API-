@@ -30,8 +30,11 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , mysql = require('mysql')
+  , url = require('url')
 ;
 
+// Base request
+var request = null;
 
 // Base Model class
 var Model = require('./models')(mysql);
@@ -76,9 +79,14 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
+app.get('/test', function(req, res) {
+    res.end( JSON.stringify(url.parse(req.url, true).query) );
+});
+
 app.get('/', routes.index);
 app.get('/users', Users.index);
 app.get('/users/:id', Users.findByID);
+// /users/:id/projects
 app.get('/projects', Projects.index);
 app.get('/projects/:id', Projects.findByID);
 

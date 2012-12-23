@@ -7,20 +7,44 @@
 <body>
     
     <h1><%= title %></h1>
-    <p>Found <%= users.length %> users.</p>
+    <p>Found <%= (users) ? users.length : 0 %> users.</p>
     
-    <table align="left" cellpadding="2" cellspacing="2">
+    <% if (error) { %>
+    <div class="error">
+        <b>The following error occurred:</b>
+        <br />
+        <%= error.message %>
+    </div>
+    <% } %>
+    
+    <% if ( users.length ) { %>
+    <table align="left" cellpadding="2" cellspacing="2" border="1">
         <tr>
             <th>Email</th>
             <th>Created</th>
+            <% if ( query['showProjects'] ) { %><th>Projects</th><% } %>
         </tr>
         <% users.forEach( function(user) { %>
         <tr>
             <td><%= user.email %></td>
             <td><%= user.created_at %></td>
+            <% if ( query['showProjects'] ) { %>
+            <td>
+                Total: <%= (user.projects.length) ? user.projects.length : 'None' %>
+                <% if ( user.projects ) { %>
+                <ul>
+                    <% user.projects.forEach( function(project) { %>
+                    <!--li><!--%= link_to(project.name, ('projects/' + project.id)) %--></li-->
+                    <li><a href="projects/<%= project.id %>"><%= project.name %></a></li>
+                    <% }) %>
+                </ul>
+                <% } %>
+            </td>
+            <% } %>
         </tr>
         <% }) %>
     </table>
+    <% } %>
     
 </body>
 </html>

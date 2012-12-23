@@ -4,7 +4,7 @@ function print_r(x, max, sep, l) { l = l || 0; max = max || 10; sep = sep || ' '
 
 /**
  * User Model
- *
+ * 
  * @param       Model      Instance of Model (includes database connection)
  *
  */
@@ -14,7 +14,26 @@ module.exports = Model_User = function( Model ) {
     /**
      * Private class members
      */
-    // ...
+    
+    var getProjectsByUserID = function( userID, callback ) {
+        
+        var link = Model.db.connect(),
+            query = 'SELECT `p`.* FROM `projects` `p`, `users_projects` `up`\
+                WHERE `up`.`user_id` = ' + userID + ' AND `up`.`project_id` = `p`.`id`';
+        
+        link.query( query, function( err, result ) {
+            if ( err ) {
+                this.error = err;
+                callback( false );
+            }
+            else {
+                callback( result );
+            }
+        });
+        
+        link.end();
+        
+    }; // getProjectsByUserID
     
     
     /**
@@ -24,17 +43,48 @@ module.exports = Model_User = function( Model ) {
         
         /**
          * Get all users
+         *
+         * @param       {Bool}      showProjects        Show projects for each user
          */
-        fetchAll: function( callback ) {
+        fetchAll: function( callback, showProjects ) {
             
-            var link = Model.db.connect();
+            var link = Model.db.connect({ multipleStatements: showProjects }),
+                query = 'SELECT id, email, created_at, modified_at FROM `users`;';
             
-            var query = 'SELECT id, email, created_at, modified_at FROM `users`';
-            var data = [];
+            var results = [],
+                queryUsers = link.query( query );
             
-            link.query( query, function(err, result) {
-                callback( Model.result(result, err) );
-            });
+            queryUsers
+                .on( 'error', function(err) {
+                    // Set the error - the .end() call will send it back to the controller
+                    this.error = {
+                        code: err.code,
+                        message: err.message
+                    };
+                })
+                .on( 'result', function(row) {
+                    
+                    var resultIndex = ( results.push(row) - 1 );
+                    results[resultIndex].projects = [];
+                    
+                    if ( showProjects ) {
+                        // Pause the parent query or projects will be null!
+                        link.pause();
+                        getProjectsByUserID( row.id, function(projects) {
+                            console.log( 'found ' + projects.length + ' projects' );
+                            if ( (projects !== false) && projects.length ) {
+                                results[resultIndex].projects = projects;
+                            }
+                            // Allow the parent query to continue
+                            link.resume();
+                        });
+                    }
+                    
+                })
+                .on( 'end', function() {
+                    // Send results back to the controller
+                    callback( Model.result(results, this.error) );
+                });
             
             link.end();
             
