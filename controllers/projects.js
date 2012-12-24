@@ -13,7 +13,7 @@ module.exports = Projects = function( Model_Project ) {
     
     // Page title
     // TODO Why the fuck does this have to be up here & not in the return object? Scope is being a bitch.
-    var title = 'Users';
+    var title = 'Projects';
     
     
     /**
@@ -26,17 +26,13 @@ module.exports = Projects = function( Model_Project ) {
          */
         index: function( req, res ) {
             
+            // Pass the showUsers query string so the model
+            // knows if to include users for each project (req.query.*)
             Model_Project.fetchAll( function(result) {
-                
-                // TODO Handle error
-                res.render( 'projects/index', {
-                    title: title + ' | Listing All',
-                    projects: result.data
-                });
-                
-            });
+                res.end( JSON.stringify(result.data) );
+            }, req.query.showUsers );
             
-        }, // Projects.list()
+        }, // Projects.index()
         
         
         /**
@@ -44,19 +40,15 @@ module.exports = Projects = function( Model_Project ) {
          *
          * @param       int     id      A numeric ID > 1
          */
-        findByID: function(req, res) {
+        findByID: function( req, res ) {
             
             if ( parseInt(req.params.id) < 1 ) {
                 res.end( 'Invalid ID: must be numeric, minimum 1.' );
             }
             else {
                 Model_Project.findByID( req.params.id, function(result) {
-                    console.log(result);
-                    res.render( 'projects/show', {
-                        title: title + ' | ' + result.data.name,
-                        project: result.data
-                    });
-                });
+                    res.end( JSON.stringify(result.data) );
+                }, req.query.showUsers );
             }
             
         } // Projects.findByID()

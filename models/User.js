@@ -15,19 +15,25 @@ module.exports = Model_User = function( Model ) {
      * Private class members
      */
     
+    /**
+     * Get a list of projects a user is a member of
+     *
+     * @param       int         userID      The user's unique ID
+     * @param       function    callback    Method will get passed false on error or result on success
+     */
     var getProjectsByUserID = function( userID, callback ) {
         
         var link = Model.db.connect(),
             query = 'SELECT `p`.* FROM `projects` `p`, `users_projects` `up`\
                 WHERE `up`.`user_id` = ' + userID + ' AND `up`.`project_id` = `p`.`id`';
         
-        link.query( query, function( err, result ) {
+        link.query( query, function( err, res ) {
             if ( err ) {
                 this.error = err;
                 callback( false );
             }
             else {
-                callback( result );
+                callback( res );
             }
         });
         
@@ -48,15 +54,16 @@ module.exports = Model_User = function( Model ) {
          */
         fetchAll: function( callback, showProjects ) {
             
-            var link = Model.db.connect({ multipleStatements: showProjects }),
-                query = 'SELECT id, email, created_at, modified_at FROM `users`;';
+            // By calling the link.query() method without passing it a callback,
+            // we can attach more granular event handling to it using the on() method.
+            var link = Model.db.connect(),
+                query = link.query( 'SELECT id, email, created_at, modified_at FROM `users`;' ),
+                results = [];
             
-            var results = [],
-                queryUsers = link.query( query );
-            
-            queryUsers
+            query
                 .on( 'error', function(err) {
                     // Set the error - the .end() call will send it back to the controller
+                    // Note: simply passing err was only showing the code, not the message
                     this.error = {
                         code: err.code,
                         message: err.message
@@ -64,15 +71,21 @@ module.exports = Model_User = function( Model ) {
                 })
                 .on( 'result', function(row) {
                     
+                    // Add row to results and get the new corresponding array index
                     var resultIndex = ( results.push(row) - 1 );
+                    
+                    // Assign at least a default empty array to the object so
+                    // the front-end doesn't choke if it goes to look for the list
                     results[resultIndex].projects = [];
                     
+                    // showProjects is specified as a querystring parameter
                     if ( showProjects ) {
                         // Pause the parent query or projects will be null!
                         link.pause();
+                        // Get all projects associated with this user
                         getProjectsByUserID( row.id, function(projects) {
-                            console.log( 'found ' + projects.length + ' projects' );
                             if ( (projects !== false) && projects.length ) {
+                                // Assign projects to the user result
                                 results[resultIndex].projects = projects;
                             }
                             // Allow the parent query to continue
@@ -96,16 +109,36 @@ module.exports = Model_User = function( Model ) {
          *
          * @param       int     id      A numeric ID > 1
          */
-        findByID: function( id, callback ) {
+        findByID: function( id, callback, showProjects ) {
             
-            var link = Model.db.connect();
+            var link = Model.db.connect(),
+                query = link.query( 'SELECT id, email, created_at, modified_at \
+                    FROM `users` WHERE id = ' + link.escape(id) + ' LIMIT 1' ),
+                result = {};
             
-            var query = 'SELECT id, email, created_at, modified_at \
-                FROM `users` WHERE id = ' + link.escape(id) + ' LIMIT 1';
-            
-            link.query( query, function(err, result) {
-                callback( Model.result(result[0], err) );
-            });
+            query
+                .on( 'error', function(err) {
+                    this.error = err;
+                })
+                .on( 'result', function(row) {
+                    
+                    result = row;
+                    //result.projects = [];
+                    
+                    if ( showProjects ) {
+                        link.pause();
+                        getProjectsByUserID( row.id, function(projects) {
+                            if ( (projects !== false) && projects.length ) {
+                                result.projects = projects;
+                            }
+                            link.resume();
+                        });
+                    }
+                    
+                })
+                .on( 'end', function() {
+                    callback( Model.result(result, this.error) );
+                });
             
             link.end();
             

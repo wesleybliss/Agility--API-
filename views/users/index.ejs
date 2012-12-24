@@ -35,7 +35,7 @@
                 <ul>
                     <% user.projects.forEach( function(project) { %>
                     <!--li><!--%= link_to(project.name, ('projects/' + project.id)) %--></li-->
-                    <li><a href="projects/<%= project.id %>"><%= project.name %></a></li>
+                    <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
                     <% }) %>
                 </ul>
                 <% } %>

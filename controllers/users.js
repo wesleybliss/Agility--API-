@@ -63,9 +63,11 @@ module.exports = Users = function( Model_User ) {
                     console.log(result);
                     res.render( 'users/show', {
                         title: title + ' | ' + result.data.email,
-                        user: result.data
+                        user: result.data,
+                        error: result.error,
+                        query: req.query
                     });
-                });
+                }, req.query.showProjects );
             }
             
         } // Users.findByID()

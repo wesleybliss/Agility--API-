@@ -14,7 +14,34 @@ module.exports = Model_Project = function( Model ) {
     /**
      * Private class members
      */
-    // ...
+    
+    /**
+     * Get a list of members (users) for a given project
+     *
+     * @param       int         projectID   The project's unique ID
+     * @param       function    callback    Method will get passed false on error or result on success
+     */
+    var getUsersByProjectID = function( projectID, callback ) {
+        
+        var link = Model.db.connect(),
+            userFields = ['id', 'email', 'created_at', 'modified_at'],
+            query = 'SELECT `u`.`' + userFields.join('`, `u`.`') + '`\
+                FROM `users` `u`, `users_projects` `up`\
+                WHERE `up`.`project_id` = ' + projectID + ' AND `up`.`user_id` = `u`.`id`';
+        
+        link.query( query, function(err, res) {
+            if ( err ) {
+                this.error = err;
+                callback( false );
+            }
+            else {
+                callback( res );
+            }
+        });
+        
+        link.end();
+        
+    }; //getUsersByProjectID()
     
     
     /**
@@ -25,17 +52,38 @@ module.exports = Model_Project = function( Model ) {
         /**
          * Get all projects
          */
-        fetchAll: function( callback ) {
+        fetchAll: function( callback, showUsers ) {
             
-            var link = Model.db.connect();
+            var link = Model.db.connect(),
+                query = link.query( 'SELECT id, name, private FROM `projects`' ),
+                results = [];
             
-            var query = 'SELECT id, name, private FROM `projects`';
-            var data = [];
-            
-            link.query( query, function(err, result) {
-                console.log( 'project: ' + result[0].name );
-                callback( Model.result(result, err) );
-            });
+            query
+                .on( 'error', function(err) {
+                    this.error = {
+                        code: err.code,
+                        message: err.message
+                    };
+                })
+                .on( 'result', function(row) {
+                    
+                    var resultIndex = ( results.push(row) - 1);
+                    //results[resultIndex].users = [];
+                    
+                    if ( showUsers ) {
+                        link.pause();
+                        getUsersByProjectID( row.id, function(users) {
+                            if ( (users !== false) && users.length ) {
+                                results[resultIndex].users = users;
+                            }
+                            link.resume();
+                        });
+                    }
+                    
+                })
+                .on( 'end', function() {
+                    callback( Model.result(results, this.error) );
+                });
             
             link.end();
             
@@ -47,17 +95,40 @@ module.exports = Model_Project = function( Model ) {
          *
          * @param       int     id      A numeric ID > 1
          */
-        findByID: function( id, callback ) {
+        findByID: function( id, callback, showUsers ) {
             
-            var link = Model.db.connect();
+            var link = Model.db.connect(),
+                query = link.query( 'SELECT id, name, private \
+                    FROM `projects` WHERE id = ' + link.escape(id) + ' LIMIT 1' ),
+                result = {};
             
-            var query = 'SELECT id, name, private \
-                FROM `projects` WHERE id = ' + link.escape(id) + ' LIMIT 1';
-            
-            link.query( query, function(err, result) {
-                callback( Model.result(result[0], err) );
-            });
-            
+            query
+                .on( 'error', function(err) {
+                    this.error = {
+                        code: err.code,
+                        message: err.message
+                    };
+                })
+                .on( 'result', function(row) {
+                    
+                    result = row;
+                    //result.users = [];
+                    
+                    if ( showUsers ) {
+                        link.pause();
+                        getUsersByProjectID( row.id, function(users) {
+                            if ( (users !== false) && users.length ) {
+                                result.users = users;
+                            }
+                            link.resume();
+                        });
+                    }
+                    
+                })
+                .on( 'end', function() {
+                    callback( Model.result(result, this.error) );
+                });
+                
             link.end();
             
         } // Model_Project.findByID()
