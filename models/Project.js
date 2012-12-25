@@ -45,6 +45,57 @@ module.exports = Model_Project = function( Model ) {
     
     
     /**
+     * Get a list of stories for a given project
+     *
+     * @param       int         projectID   The project's unique ID
+     * @param       function    callback    Method will get passed false on error or result on success
+     */
+    var getStoriesByProjectID = function( projectID, callback ) {
+        
+        var link = Model.db.connect(),
+            query = '\
+                SELECT\
+                    s.id            AS `id`,\
+                    s.title         AS `title`,\
+                    s.description   AS `description`,\
+                    s.points        AS `points`,\
+                    s.created_at    AS `created_at`,\
+                    s.modified_at   AS `modified_at`,\
+                    p.name          AS `project_name`,\
+                    st.label        AS `type`,\
+                    ss.label        AS `status`,\
+                    r.id            AS `requester_id`,\
+                    r.email         AS `requester_email`,\
+                    r.first_name    AS `requester_first_name`,\
+                    r.last_name     AS `requester_last_name`,\
+                    o.id            AS `owner_id`,\
+                    o.email         AS `owner_email`,\
+                    o.first_name    AS `owner_first_name`,\
+                    o.last_name     AS `owner_last_name`\
+                FROM stories `s`\
+                LEFT JOIN `projects`        `p`     ON s.project_id = ' + projectID + '\
+                LEFT JOIN `story_types`     `st`    ON s.story_type_id = st.id\
+                LEFT JOIN `story_statuses`  `ss`    ON s.story_status_id = ss.id\
+                LEFT JOIN `users`           `r`     ON s.requester_id = r.id\
+                LEFT JOIN `users`           `o`     ON s.owner_id = o.id\
+                ';
+        
+        link.query( query, function(err, res) {
+            if ( err ) {
+                this.error = err;
+                callback( false );
+            }
+            else {
+                callback( res );
+            }
+        });
+        
+        link.end();
+        
+    }; //getStoriesByProjectID()
+    
+    
+    /**
      * Public class members
      */
     return {
@@ -52,7 +103,7 @@ module.exports = Model_Project = function( Model ) {
         /**
          * Get all projects
          */
-        fetchAll: function( callback, showUsers ) {
+        fetchAll: function( callback, showUsers, showStories ) {
             
             var link = Model.db.connect(),
                 query = link.query( 'SELECT id, name, private FROM `projects`' ),
@@ -80,6 +131,16 @@ module.exports = Model_Project = function( Model ) {
                         });
                     }
                     
+                    if ( showStories ) {
+                        link.pause();
+                        getStoriesByProjectID( row.id, function(stories) {
+                            if ( (stories !== false) && stories.length ) {
+                                results[resultIndex].stories = stories;
+                            }
+                            link.resume();
+                        });
+                    }
+                    
                 })
                 .on( 'end', function() {
                     callback( Model.result(results, this.error) );
@@ -95,7 +156,7 @@ module.exports = Model_Project = function( Model ) {
          *
          * @param       int     id      A numeric ID > 1
          */
-        findByID: function( id, callback, showUsers ) {
+        findByID: function( id, callback, showUsers, showStories ) {
             
             var link = Model.db.connect(),
                 query = link.query( 'SELECT id, name, private \
@@ -119,6 +180,16 @@ module.exports = Model_Project = function( Model ) {
                         getUsersByProjectID( row.id, function(users) {
                             if ( (users !== false) && users.length ) {
                                 result.users = users;
+                            }
+                            link.resume();
+                        });
+                    }
+                    
+                    if ( showStories ) {
+                        link.pause();
+                        getStoriesByProjectID( row.id, function(stories) {
+                            if ( (stories !== false) && stories.length ) {
+                                result.stories = stories;
                             }
                             link.resume();
                         });

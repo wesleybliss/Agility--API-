@@ -11,10 +11,6 @@ module.exports = Projects = function( Model_Project ) {
      * Private class members
      */
     
-    // Page title
-    // TODO Why the fuck does this have to be up here & not in the return object? Scope is being a bitch.
-    var title = 'Projects';
-    
     
     /**
      * Public class members
@@ -30,7 +26,7 @@ module.exports = Projects = function( Model_Project ) {
             // knows if to include users for each project (req.query.*)
             Model_Project.fetchAll( function(result) {
                 res.end( JSON.stringify(result.data) );
-            }, req.query.showUsers );
+            }, req.query.showUsers, req.query.showStories );
             
         }, // Projects.index()
         
@@ -48,7 +44,7 @@ module.exports = Projects = function( Model_Project ) {
             else {
                 Model_Project.findByID( req.params.id, function(result) {
                     res.end( JSON.stringify(result.data) );
-                }, req.query.showUsers );
+                }, req.query.showUsers, req.query.showStories );
             }
             
         } // Projects.findByID()
