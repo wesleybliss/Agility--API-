@@ -13,6 +13,7 @@ echo ""
 read -p "Are you sure you want to continue? (y/n)" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+	echo ""
 	for f in *.sql
 	do
 		echo "    - $f"

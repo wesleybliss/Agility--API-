@@ -33,8 +33,6 @@ var express = require('express')
   , url = require('url')
 ;
 
-// Base request
-var request = null;
 
 // Base Model class
 var Model = require('./models')(mysql);
@@ -42,12 +40,14 @@ var Model = require('./models')(mysql);
 // Models
 var models = {
     Model_User: require('./models/User')(Model),
-    Model_Project: require('./models/Project')(Model)
+    Model_Project: require('./models/Project')(Model),
+    Model_Story: require('./models/Story')(Model)
 };
 
 // Controllers (and pass models so it can access them for better MVC)
 var Users = require('./controllers/users')(models.Model_User);
 var Projects = require('./controllers/projects')(models.Model_Project);
+var Stories = require('./controllers/stories')(models.Model_Story);
 
 
 var app = express();
@@ -89,6 +89,8 @@ app.get('/users/:id', Users.findByID);
 // /users/:id/projects
 app.get('/projects', Projects.index);
 app.get('/projects/:id', Projects.findByID);
+app.get('/stories', Stories.index);
+app.get('/stories/:id', Stories.findByID);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log("Agility via Express server listening on port " + app.get('port'));

@@ -1,100 +1,101 @@
-INSERT INTO `projects` (`name`,`private`) VALUES ('nonummy','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('felis.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('interdum feugiat.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Cum','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('quam vel','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('viverra. Maecenas','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('a, facilisis non,','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('amet ante.','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('egestas,','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('In scelerisque','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('convallis convallis','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('non sapien','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('tortor, dictum eu,','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Proin','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('sagittis felis. Donec','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('fermentum vel, mauris.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('venenatis','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('urna.','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('metus. In nec','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('gravida','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Nulla tempor augue','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('cubilia Curae;','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('dis parturient montes,','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('montes, nascetur ridiculus','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('iaculis','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Aenean egestas hendrerit','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('nunc','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('et, euismod','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('magnis','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('at','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('sed turpis nec','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('dui. Cras','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Duis risus','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('semper','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('posuere cubilia Curae;','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('suscipit','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Fusce','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('neque pellentesque massa','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('turpis. In condimentum.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Vestibulum ante','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('bibendum.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('laoreet ipsum. Curabitur','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Aliquam','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('venenatis','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('est ac','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('est. Nunc ullamcorper,','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('id enim. Curabitur','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('et','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Donec tempus, lorem','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Cum sociis natoque','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('ut lacus. Nulla','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('tincidunt','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Vivamus sit amet','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('sit amet','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('semper tellus id','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Curae; Donec','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('mattis semper,','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Quisque imperdiet, erat','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('ipsum cursus','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('felis','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Class aptent','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('id','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('porttitor interdum. Sed','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('et nunc. Quisque','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('non quam.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('tortor nibh sit','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('tincidunt vehicula risus.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('metus vitae','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('nec tellus.','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('diam vel arcu.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('et, eros.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Nulla eget metus','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('lorem ut aliquam','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('neque','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('nibh. Donec','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('lectus pede et','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('facilisis, magna tellus','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('interdum.','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('vulputate mauris','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('porttitor','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Sed pharetra,','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('ac mattis semper,','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Nullam nisl. Maecenas','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('justo. Proin','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('ut, pellentesque eget,','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Nullam','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('risus, at fringilla','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('nunc, ullamcorper','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('auctor non, feugiat','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('arcu. Curabitur ut','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('consectetuer','0');
-INSERT INTO `projects` (`name`,`private`) VALUES ('amet','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('nisi','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('at','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('dignissim tempor arcu.','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('tempor arcu.','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('libero','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('Phasellus fermentum','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('elit sed consequat','1');
-INSERT INTO `projects` (`name`,`private`) VALUES ('gravida molestie arcu.','0');
+INSERT INTO projects (name, private) VALUES
+("Nonummy",1),
+("Felis",0),
+("Interdum Feugiat",0),
+("Cum",1),
+("Quam Vel",1),
+("Viverra Maecenas",0),
+("A, Facilisis Non,",1),
+("Amet Ante",1),
+("Egestas,",0),
+("In Scelerisque",1),
+("Convallis Convallis",1),
+("Non Sapien",0),
+("Tortor, Dictum Eu,",0),
+("Proin",0),
+("Sagittis Felis Donec",1),
+("Fermentum Vel, Mauris",0),
+("Venenatis",0),
+("Urna",1),
+("Metus In Nec",1),
+("Gravida",1),
+("Nulla Tempor Augue",1),
+("Cubilia Curae;",0),
+("Dis Parturient Montes,",1),
+("Montes, Nascetur Ridiculu",1),
+("Iaculis",0),
+("Aenean Egestas Hendrerit",0),
+("Nunc",1),
+("Et, Euismod",1),
+("Magnis",1),
+("At",0),
+("Sed Turpis Nec",1),
+("Dui Cras",0),
+("Duis Risus",1),
+("Semper",1),
+("Posuere Cubilia Curae;",0),
+("Suscipit",1),
+("Fusce",1),
+("Neque Pellentesque Massa",0),
+("Turpis In Condimentum",0),
+("Vestibulum Ante",1),
+("Bibendum",0),
+("Laoreet Ipsum Curabitur",1),
+("Aliquam",1),
+("Venenatis",0),
+("Est Ac",1),
+("Est Nunc Ullamcorper,",1),
+("Id Enim Curabitur",0),
+("Et",1),
+("Donec Tempus, Lorem",1),
+("Cum Sociis Natoque",0),
+("Ut Lacus Nulla",1),
+("Tincidunt",1),
+("Vivamus Sit Amet",0),
+("Sit Amet",1),
+("Semper Tellus Id",0),
+("Curae; Donec",1),
+("Mattis Semper,",1),
+("Quisque Imperdiet, Erat",1),
+("Ipsum Cursus",0),
+("Felis",1),
+("Class Aptent",0),
+("Id",0),
+("Porttitor Interdum Sed",0),
+("Et Nunc Quisque",0),
+("Non Quam",0),
+("Tortor Nibh Sit",1),
+("Tincidunt Vehicula Risus",0),
+("Metus Vitae",0),
+("Nec Tellus",1),
+("Diam Vel Arcu",0),
+("Et, Eros",0),
+("Nulla Eget Metus",0),
+("Lorem Ut Aliquam",0),
+("Neque",0),
+("Nibh Donec",0),
+("Lectus Pede Et",1),
+("Facilisis, Magna Tellus",1),
+("Interdum",0),
+("Vulputate Mauris",1),
+("Porttitor",0),
+("Sed Pharetra,",0),
+("Ac Mattis Semper,",0),
+("Nullam Nisl Maecenas",1),
+("Justo Proin",1),
+("Ut, Pellentesque Eget,",1),
+("Nullam",1),
+("Risus, At Fringilla",0),
+("Nunc, Ullamcorper",0),
+("Auctor Non, Feugiat",1),
+("Arcu Curabitur Ut",0),
+("Consectetuer",0),
+("Amet",1),
+("Nisi",1),
+("At",1),
+("Dignissim Tempor Arcu",1),
+("Tempor Arcu",1),
+("Libero",1),
+("Phasellus Fermentum",1),
+("Elit Sed Consequat",1),
+("Gravida Molestie Arcu",0);
