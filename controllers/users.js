@@ -30,7 +30,9 @@ module.exports = Users = function( Model_User ) {
         index: function( req, res ) {
             
             Model_User.fetchAll( function(result) {
-                
+                res.writeHead(200, {
+                    'Content-Type': 'application/json' });
+                return res.end(JSON.stringify(result));
                 // TODO Handle error
                 res.render( 'users/index', {
                     title: title + ' | Listing All',
