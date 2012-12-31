@@ -31,7 +31,9 @@ module.exports = Users = function( Model_User ) {
             
             Model_User.fetchAll( function(result) {
                 res.writeHead(200, {
-                    'Content-Type': 'application/json' });
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                });
                 return res.end(JSON.stringify(result));
                 // TODO Handle error
                 res.render( 'users/index', {
