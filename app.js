@@ -94,7 +94,26 @@ app.get('/projects/:id', Projects.findByID);
 app.get('/stories', Stories.index);
 app.get('/stories/:id', Stories.findByID);
 
-http.createServer(app).listen(app.get('port'), function() {
+
+//
+// Have Node create the server based on the Express app
+// but don't tell it to listen yet. The FAYE adapter needs
+// to be bound to the server before we tell Express to start listening.
+var AGILITY_SERVER = http.createServer(app);
+//
+
+
+// Instantiate FAYE and create an adapter
+var bayeux = new faye.NodeAdapter({
+    mount: '/faye',
+    timeout: 45
+});
+
+// Attach FAYE to the server
+bayeux.attach( AGILITY_SERVER );
+
+// Let Express start listening
+AGILITY_SERVER.listen(app.get('port'), function() {
     
     var fs = require('fs'),
         tag = fs.readFileSync( 'agility.tag', 'UTF-8' ),
@@ -117,11 +136,3 @@ http.createServer(app).listen(app.get('port'), function() {
     console.log( '>> Agility via Express server listening on port ' + app.get('port') + "\n\n" );
     
 });
-
-
-var bayeux = new faye.NodeAdapter({
-    mount: '/faye',
-    timeout: 45
-});
-
-bayeux.attach( app );
