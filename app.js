@@ -31,6 +31,7 @@ var express = require('express')
   , path = require('path')
   , mysql = require('mysql')
   , url = require('url')
+  , faye = require('faye')
   , clc = require('cli-color') // Just for fun
 ;
 
@@ -94,7 +95,7 @@ app.get('/stories', Stories.index);
 app.get('/stories/:id', Stories.findByID);
 
 http.createServer(app).listen(app.get('port'), function() {
-    //console.log("Agility via Express server listening on port " + app.get('port'));
+    
     var fs = require('fs'),
         tag = fs.readFileSync( 'agility.tag', 'UTF-8' ),
         showTag = clc.xterm(32).bgXterm(255);
@@ -116,3 +117,11 @@ http.createServer(app).listen(app.get('port'), function() {
     console.log( '>> Agility via Express server listening on port ' + app.get('port') + "\n\n" );
     
 });
+
+
+var bayeux = new faye.NodeAdapter({
+    mount: '/faye',
+    timeout: 45
+});
+
+bayeux.attach( app );
