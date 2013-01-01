@@ -25,7 +25,11 @@ module.exports = Stories = function( Model_Story ) {
             // Pass the showUsers query string so the model
             // knows if to include users for each story (req.query.*)
             Model_Story.fetchAll( function(result) {
-                res.end( JSON.stringify(result.data) );
+                res.writeHead(200, {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                });
+                res.end( JSON.stringify(result) );
             });
             
         }, // Stories.index()
@@ -43,7 +47,7 @@ module.exports = Stories = function( Model_Story ) {
             }
             else {
                 Model_Story.findByID( req.params.id, function(result) {
-                    res.end( JSON.stringify(result.data) );
+                    res.end( JSON.stringify(result) );
                 });
             }
             

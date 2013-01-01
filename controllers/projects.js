@@ -25,7 +25,11 @@ module.exports = Projects = function( Model_Project ) {
             // Pass the showUsers query string so the model
             // knows if to include users for each project (req.query.*)
             Model_Project.fetchAll( function(result) {
-                res.end( JSON.stringify(result.data) );
+                res.writeHead(200, {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                });
+                res.end( JSON.stringify(result) );
             }, req.query.showUsers, req.query.showStories );
             
         }, // Projects.index()

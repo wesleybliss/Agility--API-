@@ -31,6 +31,7 @@ var express = require('express')
   , path = require('path')
   , mysql = require('mysql')
   , url = require('url')
+  , clc = require('cli-color') // Just for fun
 ;
 
 
@@ -92,6 +93,26 @@ app.get('/projects/:id', Projects.findByID);
 app.get('/stories', Stories.index);
 app.get('/stories/:id', Stories.findByID);
 
-http.createServer(app).listen(app.get('port'), function(){
-    console.log("Agility via Express server listening on port " + app.get('port'));
+http.createServer(app).listen(app.get('port'), function() {
+    //console.log("Agility via Express server listening on port " + app.get('port'));
+    var fs = require('fs'),
+        tag = fs.readFileSync( 'agility.tag', 'UTF-8' ),
+        showTag = clc.xterm(32).bgXterm(255);
+    tag = ( tag.length ? tag : 'Agility' );
+    tag = tag.replace( "\r\n", "\n" );
+    
+    if ( tag.indexOf("\n") < 0 ) {
+        console.log( showTag(tag) );
+    }
+    else {
+        tag = tag.split( "\n" );
+        var out = '';
+        for ( var l in tag ) {
+            out += ( showTag(tag[l]) + '\033[0m' + "\n" );
+        }
+        console.log( out );
+    }
+    
+    console.log( '>> Agility via Express server listening on port ' + app.get('port') + "\n\n" );
+    
 });
