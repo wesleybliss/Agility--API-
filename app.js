@@ -32,6 +32,7 @@ var express = require('express')
   , mysql = require('mysql')
   , url = require('url')
   , faye = require('faye')
+  , io = require('socket.io')
   , clc = require('cli-color') // Just for fun
 ;
 
@@ -136,3 +137,12 @@ AGILITY_SERVER.listen(app.get('port'), function() {
     console.log( '>> Agility via Express server listening on port ' + app.get('port') + "\n\n" );
     
 });
+
+
+// Attach socket.io to the server
+//io = io.listen( AGILITY_SERVER );
+io = io.listen( 4000 );
+
+// Setup listeners for socket.io events
+var Agility_Persistence = require( './persistence' )(io);
+Agility_Persistence.init();
