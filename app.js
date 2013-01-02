@@ -139,9 +139,9 @@ AGILITY_SERVER.listen(app.get('port'), function() {
 });
 
 
-// Attach socket.io to the server
-//io = io.listen( AGILITY_SERVER );
+// Attach socket.io to a different port than the server
 io = io.listen( 4000 );
+io.set( 'log level', 1 );
 
 // Setup listeners for socket.io events
 var Agility_Persistence = require( './persistence' )(io);
